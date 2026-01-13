@@ -3,90 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Premium</title>
+    <title>Withdraw NP - Live Monitor</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #070b14;
-            --card: #121826;
-            --primary: #00d2ff;
-            --secondary: #3a7bd5;
-            --text: #ffffff;
-        }
-
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: radial-gradient(circle at top, #1e293b 0%, #070b14 100%);
-            color: var(--text);
             margin: 0;
+            padding: 0;
+            background-color: #070b14;
+            color: white;
+            font-family: sans-serif;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
             height: 100vh;
-            overflow: hidden;
         }
-
-        .container { width: 85%; text-align: center; }
-
-        .logo-box {
-            width: 100px; height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 24px;
-            margin: 0 auto 30px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 38px; font-weight: 800;
-            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        /* Header tetap di atas */
+        .header {
+            padding: 15px;
+            background: #121826;
+            text-align: center;
+            font-weight: bold;
+            border-bottom: 1px solid #1e293b;
         }
-
-        h1 { font-size: 24px; margin: 0; font-weight: 800; }
-        .subtitle { color: #64748b; font-size: 13px; margin-top: 5px; margin-bottom: 40px; }
-
-        .btn-action {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff; border: none; padding: 20px 0; width: 100%;
-            border-radius: 20px; font-size: 16px; font-weight: 700;
-            cursor: pointer; box-shadow: 0 10px 25px rgba(0, 210, 255, 0.2);
+        /* Area tempat sinyal muncul */
+        .signal-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .footer {
+            padding: 10px;
+            background: #121826;
+            text-align: center;
+        }
+        .btn-back {
+            background: #38bdf8;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-box">NP</div>
-        <h1>Withdraw NP</h1>
-        <div class="subtitle">MONITOR SINYAL REAL-TIME</div>
-        
-        <button id="btnOpen" class="btn-action">BUKA RUANG SINYAL</button>
+    <div class="header">WD SINYAL MONITOR</div>
+
+    <div class="signal-container" id="widget-area">
+        <script async src="https://telegram.org/js/telegram-widget.js?22" 
+                data-telegram-discussion="KumpulanWDSinyalDV" 
+                data-comments-limit="10" 
+                data-dark="1"></script>
+    </div>
+
+    <div class="footer">
+        <button class="btn-back" onclick="location.reload()">REFRESH SINYAL</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.enableClosingConfirmation();
-
-        const btn = document.getElementById('btnOpen');
         
-        // MENGGUNAKAN MODAL OVERLAY (TRIK TERBAIK)
-        btn.addEventListener('click', () => {
-            tg.HapticFeedback.impactOccurred('heavy');
-            
-            // Menggunakan openLink dengan try_instant_view agar tetap di dalam frame
-            // Jika ini tidak didukung oleh versi Telegram user, ia akan membuka browser internal
-            tg.openLink('https://t.me/KumpulanWDSinyalDV', {try_instant_view: true});
-            
-            // Kita pasang tombol Close/Kembali yang sangat jelas
-            tg.MainButton.setText("KEMBALI KE MENU NP");
-            tg.MainButton.show();
+        // Tombol Back resmi di pojok kiri atas
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+            tg.close(); // Ini akan langsung menutup aplikasi dan kembali ke bot
         });
-
-        tg.MainButton.onClick(() => {
-            tg.MainButton.hide();
-            // Ini akan memaksa aplikasi fokus kembali ke layar utama
-            window.location.reload(); 
-        });
-
-        tg.ready();
     </script>
 </body>
 </html>
