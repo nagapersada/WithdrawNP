@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Premium Monitor</title>
+    <title>Withdraw NP - Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --primary: #38bdf8;
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
+            --bg: #070b14;
+            --card: #121826;
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --text: #ffffff;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top, #1e293b 0%, #070b14 100%);
             color: var(--text);
             margin: 0;
             display: flex;
@@ -26,109 +27,130 @@
             overflow: hidden;
         }
 
-        .app-card {
-            background: var(--card);
+        .container {
             width: 85%;
-            padding: 40px 20px;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.1);
+            z-index: 2;
         }
 
-        .logo-wrapper {
+        /* Animasi Pulsing untuk Logo */
+        .logo-container {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 25px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
         }
 
-        .logo-bg {
+        .logo-glow {
             position: absolute;
             inset: 0;
             background: var(--primary);
-            filter: blur(20px);
-            opacity: 0.3;
-            border-radius: 50%;
+            border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
+            filter: blur(25px);
+            opacity: 0.4;
+            animation: morph 8s ease-in-out infinite;
         }
 
-        .logo {
+        .logo-box {
             position: relative;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0ea5e9, #2563eb);
-            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 800;
-            color: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
-        h1 { font-size: 24px; margin: 0 0 10px; letter-spacing: -0.5px; }
-        p { color: var(--text-dim); font-size: 14px; line-height: 1.6; margin-bottom: 30px; }
+        h1 { font-size: 28px; margin: 0; font-weight: 800; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #64748b; font-size: 14px; margin-top: 8px; font-weight: 500; }
 
-        .btn-premium {
-            background: var(--primary);
-            color: #0f172a;
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
             border: none;
-            padding: 18px 0;
+            padding: 20px 0;
             width: 100%;
-            border-radius: 16px;
+            border-radius: 20px;
             font-size: 16px;
             font-weight: 700;
+            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3);
             cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .status-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #10b981;
-            border-radius: 50%;
-            margin-right: 6px;
-            box-shadow: 0 0 10px #10b981;
+        @keyframes morph {
+            0% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
+            100% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-card">
-        <div class="logo-wrapper">
-            <div class="logo-bg"></div>
-            <div class="logo">NP</div>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-glow"></div>
+            <div class="logo-box">NP</div>
         </div>
         <h1>Withdraw NP</h1>
-        <p><span class="status-dot"></span> Sinyal Aktif & Terverifikasi</p>
-        <p>Akses eksklusif kumpulan sinyal trading harian dengan akurasi tinggi.</p>
-        <button id="mainBtn" class="btn-premium">Masuk Ruang Sinyal</button>
+        <div class="subtitle">PREMIUM SIGNAL MONITOR</div>
+
+        <div class="info-card">
+            <div style="font-size: 13px; color: var(--primary); margin-bottom: 5px; font-weight: bold;">STATUS: CONNECTED</div>
+            <div style="font-size: 12px; color: #94a3b8;">Klik tombol di bawah untuk memantau sinyal. Aplikasi akan tetap standby di latar belakang.</div>
+        </div>
+
+        <button id="btnOpen" class="btn-action">LIHAT SINYAL SEKARANG</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.enableClosingConfirmation(); // Mencegah aplikasi tertutup tidak sengaja
+        tg.enableClosingConfirmation();
 
-        const groupLink = 'https://t.me/KumpulanWDSinyalDV';
+        // 1. Mengatur Warna Tema agar Seamless
+        tg.setHeaderColor('#1e293b');
+        tg.setBackgroundColor('#070b14');
 
-        function openChannel() {
-            tg.HapticFeedback.impactOccurred('medium');
-            tg.openTelegramLink(groupLink);
+        const btn = document.getElementById('btnOpen');
+        const link = 'https://t.me/KumpulanWDSinyalDV';
+
+        btn.addEventListener('click', () => {
+            tg.HapticFeedback.impactOccurred('heavy');
             
-            // Mengaktifkan tombol "Back" setelah user mengklik link
-            // Ini membantu user merasa mereka bisa kembali ke app
+            // Trik: Gunakan tombol utama Telegram untuk memicu "Back" lebih cepat
+            tg.MainButton.setText("KEMBALI KE APLIKASI");
+            tg.MainButton.show();
+            
+            // Buka Link
+            tg.openTelegramLink(link);
+            
+            // Otomatis munculkan Back Button agar user bisa langsung klik
             tg.BackButton.show();
-        }
+        });
 
-        document.getElementById('mainBtn').addEventListener('click', openChannel);
-
-        // Fitur Utama: Kembali ke Aplikasi
         tg.BackButton.onClick(() => {
             tg.BackButton.hide();
-            // Aplikasi akan tetap terbuka, memberikan kesan user "kembali" ke menu utama
+            tg.MainButton.hide();
+            // Fokus kembali ke aplikasi
+        });
+
+        tg.MainButton.onClick(() => {
+            tg.MainButton.hide();
+            tg.BackButton.hide();
+            // Fokus kembali ke aplikasi
         });
 
         tg.ready();
