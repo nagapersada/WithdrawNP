@@ -3,185 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Premium Portal</title>
+    <title>Withdraw NP - Portal</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #030712;
-            --card: #111827;
-            --primary: #0ea5e9;
-            --secondary: #2563eb;
-            --accent: #10b981;
-            --text: #f8fafc;
+        :root { --bg: #030712; --card: #111827; --primary: #0ea5e9; --text: #f8fafc; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; height: 100vh; overflow: hidden; }
+        
+        .container {
+            display: flex; flex-direction: column; height: 100%;
+            background: radial-gradient(circle at top, #1e293b 0%, #030712 100%);
+            padding: 20px; box-sizing: border-box; justify-content: space-between;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            height: 100%;
-            overflow: hidden; /* Mencegah double scroll */
+        .header-section { text-align: center; margin-top: 10px; }
+        .logo { 
+            width: 70px; height: 70px; background: linear-gradient(135deg, #0ea5e9, #2563eb); 
+            border-radius: 20px; margin: 0 auto 15px; display: flex; align-items: center; 
+            justify-content: center; font-size: 28px; font-weight: 800; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
         }
 
-        .app-wrapper {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            background: radial-gradient(circle at top right, #1e293b 0%, #030712 100%);
-        }
+        .info-box { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin: 10px 0; text-align: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+        .grid-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
 
-        .header {
-            padding: 25px 20px;
-            text-align: center;
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .logo-circle {
-            width: 80px; height: 80px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 22px;
-            margin: 0 auto 15px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 32px; font-weight: 800; color: white;
-            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
-        }
-
-        h1 { font-size: 22px; margin: 0; letter-spacing: -0.5px; font-weight: 800; }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent);
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            margin-top: 8px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-
-        /* Area Scroll */
-        .main-content {
-            flex: 1;
-            overflow-y: auto; /* SCROLL AKTIF */
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .info-card {
-            background: var(--card);
-            border: 1px solid rgba(255,255,255,0.05);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-        }
-
-        .info-card p {
-            font-size: 14px;
-            color: #94a3b8;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .btn-container {
-            padding: 20px;
-            background: rgba(3, 7, 18, 0.8);
-            backdrop-filter: blur(10px);
-        }
-
-        .main-button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 18px;
-            width: 100%;
-            border-radius: 16px;
-            font-size: 16px;
-            font-weight: 700;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-            cursor: pointer;
-            transition: transform 0.1s;
-        }
-
-        .main-button:active { transform: scale(0.97); }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .feature-item {
-            background: rgba(255,255,255,0.03);
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 12px;
-            border: 1px solid rgba(255,255,255,0.05);
+        /* Tombol Utama - Dibuat Besar dan Selalu Kelihatan */
+        .footer-section { margin-bottom: 10px; }
+        .main-btn {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none;
+            padding: 18px; width: 100%; border-radius: 16px; font-size: 16px; font-weight: 700;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4); cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-    <div class="app-wrapper">
-        <div class="header">
-            <div class="logo-circle">NP</div>
-            <h1>Withdraw NP</h1>
-            <div class="status-badge">● SYSTEM ONLINE</div>
+    <div class="container">
+        <div class="header-section">
+            <div class="logo">NP</div>
+            <h1 style="font-size: 22px; margin: 0;">Withdraw NP</h1>
+            <div style="color: #10b981; font-size: 11px; margin-top: 5px; font-weight: 600;">● SYSTEM ONLINE</div>
         </div>
 
-        <div class="main-content">
-            <div class="info-card">
-                <p>Selamat datang di portal monitoring sinyal eksklusif. Dapatkan akses ke data trading terverifikasi secara real-time.</p>
+        <div>
+            <div class="info-box">
+                <p style="font-size: 13px; color: #94a3b8; margin: 0;">Akses portal monitoring sinyal eksklusif secara real-time.</p>
             </div>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div style="color: var(--primary); font-weight: 800; margin-bottom: 5px;">98%</div>
-                    Accuracy Rate
-                </div>
-                <div class="feature-item">
-                    <div style="color: var(--primary); font-weight: 800; margin-bottom: 5px;">24/7</div>
-                    Active Signals
-                </div>
+            <div class="grid">
+                <div class="grid-item"><div style="color: #0ea5e9; font-weight: 800;">98%</div><div style="font-size: 10px;">Accuracy</div></div>
+                <div class="grid-item"><div style="color: #0ea5e9; font-weight: 800;">24/7</div><div style="font-size: 10px;">Signals</div></div>
             </div>
-
-            <div class="info-card" style="margin-top: 10px;">
-                <p style="font-size: 12px;">Gunakan tombol di bawah untuk masuk ke ruang chat. Aplikasi akan standby di latar belakang untuk memudahkan Anda kembali.</p>
-            </div>
-            
-            <div style="height: 20px;"></div>
         </div>
 
-        <div class="btn-container">
-            <button id="launchBtn" class="main-button">Masuk Ruang Sinyal</button>
+        <div class="footer-section">
+            <button id="entryBtn" class="main-btn">MASUK KE RUANG SINYAL</button>
         </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        tg.enableClosingConfirmation();
-        tg.setHeaderColor('#111827');
 
-        document.getElementById('launchBtn').addEventListener('click', () => {
-            tg.HapticFeedback.impactOccurred('heavy');
-            
-            // PENTING: Gunakan skema t.me agar sistem Telegram yang menangani navigasi
+        document.getElementById('entryBtn').addEventListener('click', () => {
+            tg.HapticFeedback.impactOccurred('heavy'); // Efek getar
             tg.openTelegramLink('https://t.me/KumpulanWDSinyalDV');
-            
-            // Aktifkan tombol kembali agar user bisa menutup portal NP dengan rapi
-            tg.BackButton.show();
-        });
-
-        tg.BackButton.onClick(() => {
-            tg.close();
         });
 
         tg.ready();
