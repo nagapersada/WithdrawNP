@@ -8,47 +8,28 @@
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
-            background-color: #070b14; color: white; overflow: hidden;
-            font-family: -apple-system, system-ui, sans-serif;
+            background-color: #070b14; overflow: hidden;
         }
-        .app-container { display: flex; flex-direction: column; height: 100vh; }
-        .header {
-            background: #121826; padding: 15px; text-align: center;
-            font-weight: 800; border-bottom: 2px solid #1e293b; color: #00d2ff;
-        }
-        /* Frame Utama */
-        .feed-container { flex: 1; position: relative; overflow: hidden; }
-        iframe {
-            width: 100%; height: 100%; border: none;
-            /* Filter untuk membuat tampilan web luar menyatu dengan tema dark mode Anda */
-            filter: invert(0.9) hue-rotate(180deg); 
-        }
-        .footer { padding: 10px; background: #121826; text-align: center; }
-        .btn-exit {
-            background: #f43f5e; color: white; border: none;
-            padding: 10px 20px; border-radius: 8px; font-weight: bold;
+        /* Frame yang akan menampilkan grup */
+        .web-view {
+            width: 100%; height: 100vh; border: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
-        <div class="header">WD SINYAL MONITOR - LIVE FEED</div>
-        
-        <div class="feed-container">
-            <iframe src="https://tgstat.com/channel/@KumpulanWDSinyalDV/embedded?dark=1"></iframe>
-        </div>
-
-        <div class="footer">
-            <button class="btn-exit" onclick="tg.close()">TUTUP APLIKASI</button>
-        </div>
-    </div>
+    <iframe 
+        class="web-view" 
+        src="https://web.telegram.org/k/#@KumpulanWDSinyalDV" 
+        allow="vertical-scroll">
+    </iframe>
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        // Tombol Kembali Resmi
+        tg.expand(); // Membuka aplikasi secara penuh
+
+        // Tombol Kembali Resmi di pojok kiri atas
+        // Jika ditekan, aplikasi akan langsung tertutup dan kembali ke bot Anda
         tg.BackButton.show();
         tg.BackButton.onClick(() => {
             tg.close();
