@@ -3,74 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Live Monitor</title>
+    <title>NP Premium Monitor</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #070b14;
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background-color: #070b14; color: white;
+            overflow: hidden; font-family: sans-serif;
         }
-        /* Header tetap di atas */
+        .app-view {
+            display: flex; flex-direction: column; height: 100vh;
+        }
         .header {
-            padding: 15px;
-            background: #121826;
-            text-align: center;
-            font-weight: bold;
-            border-bottom: 1px solid #1e293b;
+            background: #121826; padding: 10px; text-align: center;
+            font-size: 14px; font-weight: bold; border-bottom: 1px solid #1e293b;
         }
-        /* Area tempat sinyal muncul */
-        .signal-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
+        /* Ini adalah bagian kunci: Menampilkan Telegram di dalam aplikasi */
+        .frame-container {
+            flex: 1; -webkit-overflow-scrolling: touch; overflow-y: auto;
         }
-        .footer {
-            padding: 10px;
-            background: #121826;
-            text-align: center;
-        }
-        .btn-back {
-            background: #38bdf8;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
+        iframe {
+            width: 100%; height: 100%; border: none;
         }
     </style>
 </head>
 <body>
-
-    <div class="header">WD SINYAL MONITOR</div>
-
-    <div class="signal-container" id="widget-area">
-        <script async src="https://telegram.org/js/telegram-widget.js?22" 
-                data-telegram-discussion="KumpulanWDSinyalDV" 
-                data-comments-limit="10" 
-                data-dark="1"></script>
-    </div>
-
-    <div class="footer">
-        <button class="btn-back" onclick="location.reload()">REFRESH SINYAL</button>
+    <div class="app-view">
+        <div class="header">WD SINYAL MONITOR - LIVE</div>
+        <div class="frame-container">
+            <iframe src="https://telemetr.io/en/channels/1638258384-KumpulanWDSinyalDV/embed" allowfullscreen></iframe>
+        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        
+        tg.enableClosingConfirmation();
+
         // Tombol Back resmi di pojok kiri atas
         tg.BackButton.show();
         tg.BackButton.onClick(() => {
-            tg.close(); // Ini akan langsung menutup aplikasi dan kembali ke bot
+            tg.close(); // Ini akan mematikan aplikasi dan balik ke chat bot
         });
     </script>
 </body>
