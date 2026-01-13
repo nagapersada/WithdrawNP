@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Premium</title>
+    <title>Withdraw NP - Premium Monitor</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -13,6 +13,7 @@
             --primary: #00d2ff;
             --secondary: #3a7bd5;
             --text: #ffffff;
+            --text-dim: #94a3b8;
         }
 
         body {
@@ -33,22 +34,21 @@
             z-index: 2;
         }
 
-        /* Animasi Pulsing untuk Logo */
         .logo-container {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px;
         }
 
         .logo-glow {
             position: absolute;
             inset: 0;
             background: var(--primary);
-            border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%;
-            filter: blur(25px);
-            opacity: 0.4;
-            animation: morph 8s ease-in-out infinite;
+            border-radius: 50%;
+            filter: blur(20px);
+            opacity: 0.3;
+            animation: pulse 2s infinite;
         }
 
         .logo-box {
@@ -56,63 +56,67 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 28px;
+            border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 42px;
+            font-size: 40px;
             font-weight: 800;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
-        h1 { font-size: 28px; margin: 0; font-weight: 800; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { color: #64748b; font-size: 14px; margin-top: 8px; font-weight: 500; }
+        h1 { font-size: 26px; margin: 0; font-weight: 800; }
+        .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 5px; }
 
-        .info-card {
+        .card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 30px 0;
+            padding: 25px;
+            border-radius: 24px;
+            margin: 35px 0;
             backdrop-filter: blur(10px);
         }
 
         .btn-action {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #fff;
+            color: #ffffff;
             border: none;
             padding: 20px 0;
             width: 100%;
-            border-radius: 20px;
+            border-radius: 18px;
             font-size: 16px;
             font-weight: 700;
-            box-shadow: 0 10px 25px rgba(0, 210, 255, 0.3);
             cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
+            transition: transform 0.1s;
         }
 
-        @keyframes morph {
-            0% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
-            50% { border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%; }
-            100% { border-radius: 35% 65% 70% 30% / 30% 30% 70% 70%; }
+        .btn-action:active { transform: scale(0.97); }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 0.3; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="mainUI">
         <div class="logo-container">
             <div class="logo-glow"></div>
             <div class="logo-box">NP</div>
         </div>
         <h1>Withdraw NP</h1>
-        <div class="subtitle">PREMIUM SIGNAL MONITOR</div>
+        <div class="subtitle">PREMIUM SIGNAL ACCESS</div>
 
-        <div class="info-card">
-            <div style="font-size: 13px; color: var(--primary); margin-bottom: 5px; font-weight: bold;">STATUS: CONNECTED</div>
-            <div style="font-size: 12px; color: #94a3b8;">Klik tombol di bawah untuk memantau sinyal. Aplikasi akan tetap standby di latar belakang.</div>
+        <div class="card">
+            <div style="font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;">SYSTEM READY</div>
+            <div style="font-size: 13px; line-height: 1.6; color: var(--text-dim);">Pantau sinyal real-time langsung di dalam aplikasi tanpa berpindah jendela.</div>
         </div>
 
-        <button id="btnOpen" class="btn-action">LIHAT SINYAL SEKARANG</button>
+        <button id="enterBtn" class="btn-action">BUKA SINYAL SEKARANG</button>
     </div>
 
     <script>
@@ -120,37 +124,26 @@
         tg.expand();
         tg.enableClosingConfirmation();
 
-        // 1. Mengatur Warna Tema agar Seamless
-        tg.setHeaderColor('#1e293b');
-        tg.setBackgroundColor('#070b14');
+        // Link Telegram Web (K-Version) untuk mencegah redirect ke App utama
+        const groupInternal = 'https://web.telegram.org/k/#@KumpulanWDSinyalDV';
 
-        const btn = document.getElementById('btnOpen');
-        const link = 'https://t.me/KumpulanWDSinyalDV';
-
-        btn.addEventListener('click', () => {
+        document.getElementById('enterBtn').addEventListener('click', function() {
+            // Berikan feedback getaran
             tg.HapticFeedback.impactOccurred('heavy');
             
-            // Trik: Gunakan tombol utama Telegram untuk memicu "Back" lebih cepat
-            tg.MainButton.setText("KEMBALI KE APLIKASI");
-            tg.MainButton.show();
-            
-            // Buka Link
-            tg.openTelegramLink(link);
-            
-            // Otomatis munculkan Back Button agar user bisa langsung klik
+            // Tampilkan tombol Back resmi Telegram
             tg.BackButton.show();
+
+            // Ganti isi halaman ini dengan grup (Tanpa melempar ke App luar)
+            // Ini akan membuat grup terbuka di dalam "bingkai" Mini App Anda
+            window.location.href = groupInternal;
         });
 
-        tg.BackButton.onClick(() => {
+        // Logika saat tombol Back diklik
+        tg.BackButton.onClick(function() {
+            // Kembali ke tampilan utama aplikasi Anda
+            window.location.href = window.location.origin + window.location.pathname;
             tg.BackButton.hide();
-            tg.MainButton.hide();
-            // Fokus kembali ke aplikasi
-        });
-
-        tg.MainButton.onClick(() => {
-            tg.MainButton.hide();
-            tg.BackButton.hide();
-            // Fokus kembali ke aplikasi
         });
 
         tg.ready();
