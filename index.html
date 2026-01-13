@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Premium Monitor</title>
+    <title>Withdraw NP - Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -13,7 +13,6 @@
             --primary: #00d2ff;
             --secondary: #3a7bd5;
             --text: #ffffff;
-            --text-dim: #94a3b8;
         }
 
         body {
@@ -28,95 +27,37 @@
             overflow: hidden;
         }
 
-        .container {
-            width: 85%;
-            text-align: center;
-            z-index: 2;
-        }
-
-        .logo-container {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 25px;
-        }
-
-        .logo-glow {
-            position: absolute;
-            inset: 0;
-            background: var(--primary);
-            border-radius: 50%;
-            filter: blur(20px);
-            opacity: 0.3;
-            animation: pulse 2s infinite;
-        }
+        .container { width: 85%; text-align: center; }
 
         .logo-box {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            width: 100px; height: 100px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            font-weight: 800;
-            color: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin: 0 auto 30px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 38px; font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
         }
 
-        h1 { font-size: 26px; margin: 0; font-weight: 800; }
-        .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 5px; }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 25px;
-            border-radius: 24px;
-            margin: 35px 0;
-            backdrop-filter: blur(10px);
-        }
+        h1 { font-size: 24px; margin: 0; font-weight: 800; }
+        .subtitle { color: #64748b; font-size: 13px; margin-top: 5px; margin-bottom: 40px; }
 
         .btn-action {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #ffffff;
-            border: none;
-            padding: 20px 0;
-            width: 100%;
-            border-radius: 18px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2);
-            transition: transform 0.1s;
-        }
-
-        .btn-action:active { transform: scale(0.97); }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 0.3; }
+            color: #fff; border: none; padding: 20px 0; width: 100%;
+            border-radius: 20px; font-size: 16px; font-weight: 700;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(0, 210, 255, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="mainUI">
-        <div class="logo-container">
-            <div class="logo-glow"></div>
-            <div class="logo-box">NP</div>
-        </div>
+    <div class="container">
+        <div class="logo-box">NP</div>
         <h1>Withdraw NP</h1>
-        <div class="subtitle">PREMIUM SIGNAL ACCESS</div>
-
-        <div class="card">
-            <div style="font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 8px; letter-spacing: 1px;">SYSTEM READY</div>
-            <div style="font-size: 13px; line-height: 1.6; color: var(--text-dim);">Pantau sinyal real-time langsung di dalam aplikasi tanpa berpindah jendela.</div>
-        </div>
-
-        <button id="enterBtn" class="btn-action">BUKA SINYAL SEKARANG</button>
+        <div class="subtitle">MONITOR SINYAL REAL-TIME</div>
+        
+        <button id="btnOpen" class="btn-action">BUKA RUANG SINYAL</button>
     </div>
 
     <script>
@@ -124,26 +65,25 @@
         tg.expand();
         tg.enableClosingConfirmation();
 
-        // Link Telegram Web (K-Version) untuk mencegah redirect ke App utama
-        const groupInternal = 'https://web.telegram.org/k/#@KumpulanWDSinyalDV';
-
-        document.getElementById('enterBtn').addEventListener('click', function() {
-            // Berikan feedback getaran
+        const btn = document.getElementById('btnOpen');
+        
+        // MENGGUNAKAN MODAL OVERLAY (TRIK TERBAIK)
+        btn.addEventListener('click', () => {
             tg.HapticFeedback.impactOccurred('heavy');
             
-            // Tampilkan tombol Back resmi Telegram
-            tg.BackButton.show();
-
-            // Ganti isi halaman ini dengan grup (Tanpa melempar ke App luar)
-            // Ini akan membuat grup terbuka di dalam "bingkai" Mini App Anda
-            window.location.href = groupInternal;
+            // Menggunakan openLink dengan try_instant_view agar tetap di dalam frame
+            // Jika ini tidak didukung oleh versi Telegram user, ia akan membuka browser internal
+            tg.openLink('https://t.me/KumpulanWDSinyalDV', {try_instant_view: true});
+            
+            // Kita pasang tombol Close/Kembali yang sangat jelas
+            tg.MainButton.setText("KEMBALI KE MENU NP");
+            tg.MainButton.show();
         });
 
-        // Logika saat tombol Back diklik
-        tg.BackButton.onClick(function() {
-            // Kembali ke tampilan utama aplikasi Anda
-            window.location.href = window.location.origin + window.location.pathname;
-            tg.BackButton.hide();
+        tg.MainButton.onClick(() => {
+            tg.MainButton.hide();
+            // Ini akan memaksa aplikasi fokus kembali ke layar utama
+            window.location.reload(); 
         });
 
         tg.ready();
