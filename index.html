@@ -2,71 +2,42 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Withdraw NP - Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw NP</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #030712; --card: #111827; --primary: #0ea5e9; --text: #f8fafc; }
-        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; height: 100vh; overflow: hidden; }
-        
-        .container {
-            display: flex; flex-direction: column; height: 100%;
-            background: radial-gradient(circle at top, #1e293b 0%, #030712 100%);
-            padding: 20px; box-sizing: border-box; justify-content: space-between;
-        }
-
-        .header-section { text-align: center; margin-top: 10px; }
-        .logo { 
-            width: 70px; height: 70px; background: linear-gradient(135deg, #0ea5e9, #2563eb); 
-            border-radius: 20px; margin: 0 auto 15px; display: flex; align-items: center; 
-            justify-content: center; font-size: 28px; font-weight: 800; box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
-        }
-
-        .info-box { background: var(--card); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin: 10px 0; text-align: center; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
-        .grid-item { background: rgba(255,255,255,0.03); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
-
-        /* Tombol Utama - Dibuat Besar dan Selalu Kelihatan */
-        .footer-section { margin-bottom: 10px; }
-        .main-btn {
-            background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; border: none;
-            padding: 18px; width: 100%; border-radius: 16px; font-size: 16px; font-weight: 700;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4); cursor: pointer;
-        }
+        body { background: #030712; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; text-align: center; }
+        .box { padding: 20px; border-radius: 20px; background: #111827; border: 1px solid #1e293b; width: 80%; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #0ea5e9; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-section">
-            <div class="logo">NP</div>
-            <h1 style="font-size: 22px; margin: 0;">Withdraw NP</h1>
-            <div style="color: #10b981; font-size: 11px; margin-top: 5px; font-weight: 600;">● SYSTEM ONLINE</div>
-        </div>
-
-        <div>
-            <div class="info-box">
-                <p style="font-size: 13px; color: #94a3b8; margin: 0;">Akses portal monitoring sinyal eksklusif secara real-time.</p>
-            </div>
-            <div class="grid">
-                <div class="grid-item"><div style="color: #0ea5e9; font-weight: 800;">98%</div><div style="font-size: 10px;">Accuracy</div></div>
-                <div class="grid-item"><div style="color: #0ea5e9; font-weight: 800;">24/7</div><div style="font-size: 10px;">Signals</div></div>
-            </div>
-        </div>
-
-        <div class="footer-section">
-            <button id="entryBtn" class="main-btn">MASUK KE RUANG SINYAL</button>
-        </div>
+    <div class="box">
+        <h2 style="color:#0ea5e9">Withdraw NP</h2>
+        <p>Menghubungkan ke Ruang Sinyal...</p>
+        <div class="loader"></div>
+        <button id="manualBtn" style="background:#0ea5e9; border:none; color:white; padding:12px; border-radius:10px; width:100%; font-weight:bold; display:none;">KLIK DISINI JIKA GAGAL</button>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
 
-        document.getElementById('entryBtn').addEventListener('click', () => {
-            tg.HapticFeedback.impactOccurred('heavy'); // Efek getar
-            tg.openTelegramLink('https://t.me/KumpulanWDSinyalDV');
-        });
+        const groupURL = 'https://t.me/KumpulanWDSinyalDV';
+
+        // Fungsi Masuk
+        function masukGrup() {
+            tg.openTelegramLink(groupURL);
+        }
+
+        // OTOMATIS JALAN DALAM 1 DETIK
+        setTimeout(() => {
+            masukGrup();
+            document.getElementById('manualBtn').style.display = 'block';
+        }, 1000);
+
+        document.getElementById('manualBtn').onclick = masukGrup;
 
         tg.ready();
     </script>
